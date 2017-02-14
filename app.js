@@ -101,19 +101,21 @@ function remeberTheJoke () {
   var newJokeSetup = document.getElementById('new-joke-setup').value.trim()
   var newJokePunchline = document.getElementById('new-joke-punchline').value.trim()
 
-  var keyObject = checkJokesObject(newJokeName)
-  if (keyObject) {
-    jokes[keyObject].setup = newJokeSetup
-    jokes[keyObject].punchline = newJokePunchline
-  } else {
-    var newObject = new Object()
-    newObject.setup = newJokeSetup
-    newObject.punchline = newJokePunchline
-    jokes[newJokeName] = newObject
+  if (newJokeName && newJokeSetup && newJokePunchline) {
+    var keyObject = checkJokesObject(newJokeName)
+    if (keyObject) {
+      jokes[keyObject].setup = newJokeSetup
+      jokes[keyObject].punchline = newJokePunchline
+    } else {
+      var newObject = new Object()
+      newObject.setup = newJokeSetup
+      newObject.punchline = newJokePunchline
+      jokes[newJokeName] = newObject
+    }
+    // console.log("Created a new thing")
+    saveJokes()
+    updatePage()
   }
-  // console.log("Created a new thing")
-  saveJokes()
-  updatePage()
 }
 
 // Delete the joke when the button is hit
@@ -122,7 +124,9 @@ function deleteJoke() {
   var deleteJokeName = document.getElementById('delete-joke-name').value.trim()
   // console.log(deleteJokeName)
   // console.log(checkJokesObject(deleteJokeName))
-  delete jokes[deleteJokeName]
+  if (deleteJokeName) {
+    delete jokes[deleteJokeName]
+  }
   saveJokes()
   updatePage()
 }
